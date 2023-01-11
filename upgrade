@@ -1,0 +1,16 @@
+cd ..
+if ! (git pull) then
+    exit 1
+    echo "ERREUR sur le git pull"
+fi
+git pull
+gitSubmodulesOnMain
+gitSubmodulesUpdate
+git submodule update --init --recursive
+nom=${PWD##*/}
+docker exec -it ${nom} composer install
+docker exec -it ${nom} yarn install
+docker exec -it ${nom} bin/console d:s:u --force
+docker exec -it ${nom} yarn build
+docker exec -it ${nom} bin/console cache:clear
+docker exec -it ${nom} bin/phpunit
