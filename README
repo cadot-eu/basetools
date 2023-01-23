@@ -1,0 +1,5 @@
+* Petits outils
+
+- MakeAllRepositories.php: pour créer tous les repositories manquant
+- setAutorisations: met les bons chmod, chown via acl
+- upgrade: met à jour les libs 
