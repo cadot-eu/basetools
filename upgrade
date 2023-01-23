@@ -14,3 +14,4 @@ docker exec -it ${nom} bin/console d:s:u --force
 docker exec -it ${nom} yarn build
 docker exec -it ${nom} bin/console cache:clear
 docker exec -it ${nom} bin/phpunit
+./setAutorisations

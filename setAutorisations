@@ -1,0 +1,3 @@
+cd ..
+nom=${PWD##*/}
+docker exec -it ${nom} sh /app/basetools/setautorisationsinterne 
