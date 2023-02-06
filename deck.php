@@ -6,12 +6,13 @@ $json = json_decode(file_get_contents('../deck.json'), true);
 foreach ($json as $action => $contents) {
     foreach ($contents as $titre => $value) {
         //vérification de la date et du jour
+        if (isset($value['heure'])) if (intval(date('H')) >= $value['heure']) echo $titre;
         if (isset($value['heure']) && isset($value['jour']) && strtolower(date('l')) == $value['jour'] and intval(date('H')) >= $value['heure']) {
             switch ($action) {
                 case 'create':
                     #arguments: titre, description,col,ordre,archived,deleted
                     $value['ordre'] = 5000;
-                    if ($value['position'] == 'top')
+                    if (isset($value['position']) && $value['position'] == 'top')
                         $value['ordre'] = -1;
                     try {
                         exec('/home/debian/docker/applications/create_card.sh' . ' "' . $titre . '" "' . $value['description'] . '" ' . $value['col'] . ' ' . $value['ordre']);
@@ -30,7 +31,7 @@ foreach ($json as $action => $contents) {
                     break;
             }
             unset($json[$action][$titre]);
-            file_put_contents('../deck.json', json_encode($json, JSON_PRETTY_PRINT));
+            file_put_contents('../deck.json', json_encode($json));
         }
     }
 }
