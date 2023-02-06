@@ -5,6 +5,7 @@ $json = json_decode(file_get_contents('../deck.json'), true);
 //boucle sur les actions
 foreach ($json as $action => $contents) {
     foreach ($contents as $titre => $value) {
+        $run = '';
         //vérification de la date et du jour
         if (isset($value['heure'])) if (intval(date('H')) >= $value['heure']) echo $titre;
         if (isset($value['heure']) && isset($value['jour']) && strtolower(date('l')) == $value['jour'] and intval(date('H')) >= $value['heure']) {
@@ -19,8 +20,10 @@ foreach ($json as $action => $contents) {
                     } catch (Exception $e) {
                         exit('Exception reçue : ' . $e->getMessage());
                     }
+                    $run = 'create';
                     break;
                 case 'move':
+                    $run = 'move';
                     break;
                 case 'delete':
                     try {
@@ -28,10 +31,15 @@ foreach ($json as $action => $contents) {
                     } catch (Exception $e) {
                         exit('Exception reçue : ' . $e->getMessage());
                     }
+                    $run = 'delete';
                     break;
             }
-            unset($json[$action][$titre]);
-            file_put_contents('../deck.json', json_encode($json));
+            //si on a une action on la supprime et on arrête la boucle pour ne pas avoir plusierus deck créer
+            if ($run != '') {
+                unset($json[$action][$titre]);
+                file_put_contents('../deck.json', json_encode($json));
+                break;
+            }
         }
     }
 }
