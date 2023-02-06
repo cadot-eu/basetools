@@ -7,8 +7,7 @@ foreach ($json as $action => $contents) {
     foreach ($contents as $titre => $value) {
         $run = '';
         //vérification de la date et du jour
-        if (isset($value['heure'])) if (intval(date('H')) >= $value['heure']) echo $titre;
-        if (isset($value['heure']) && isset($value['jour']) && strtolower(date('l')) == $value['jour'] and intval(date('H')) >= $value['heure']) {
+        if (isset($value['heure']) && isset($value['jour']) && strtolower(date('l')) == $value['jour'] and intval(date('H')) >= intval($value['heure'])) {
             switch ($action) {
                 case 'create':
                     #arguments: titre, description,col,ordre,archived,deleted
@@ -37,9 +36,16 @@ foreach ($json as $action => $contents) {
             //si on a une action on la supprime et on arrête la boucle pour ne pas avoir plusierus deck créer
             if ($run != '') {
                 unset($json[$action][$titre]);
-                file_put_contents('../deck.json', json_encode($json));
+                file_put_contents('../deck.json', json_encode($json, JSON_PRETTY_PRINT));
                 break;
             }
+        } else {
+            $error = [];
+            if (strtolower(date('l')) != $value['jour'])
+                $error[] = 'jour';
+            if (intval(date('H')) < intval($value['heure']))
+                $error[] = 'heure';
+            echo "temps pas bon pour $titre (" . implode(', ', $error) . ")\n";
         }
     }
 }
