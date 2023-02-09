@@ -19,10 +19,12 @@ foreach ($json as $action => $contents) {
                     } catch (Exception $e) {
                         exit('Exception reçue : ' . $e->getMessage());
                     }
+		    echo date("d-M").":Création deck";
                     $run = 'create';
                     break;
                 case 'move':
                     $run = 'move';
+		    echo date("d-M").":Move deck";
                     break;
                 case 'delete':
                     try {
@@ -30,6 +32,7 @@ foreach ($json as $action => $contents) {
                     } catch (Exception $e) {
                         exit('Exception reçue : ' . $e->getMessage());
                     }
+		    echo date("d-M").":Delete deck";
                     $run = 'delete';
                     break;
             }
