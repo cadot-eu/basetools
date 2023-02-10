@@ -19,12 +19,17 @@ foreach ($json as $action => $contents) {
                     } catch (Exception $e) {
                         exit('Exception reçue : ' . $e->getMessage());
                     }
-		    echo date("d-M").":Création deck";
+                    echo date("d-M") . ":Création deck";
                     $run = 'create';
                     break;
                 case 'move':
+                    try {
+                        exec('/home/debian/docker/applications/move_card.sh' . ' "' . $titre . '" ' . $value['colstart'] . ' ' . $value['colend']);
+                    } catch (Exception $e) {
+                        exit('Exception reçue : ' . $e->getMessage());
+                    }
+                    echo date("d-M") . ":Move deck";
                     $run = 'move';
-		    echo date("d-M").":Move deck";
                     break;
                 case 'delete':
                     try {
@@ -32,7 +37,7 @@ foreach ($json as $action => $contents) {
                     } catch (Exception $e) {
                         exit('Exception reçue : ' . $e->getMessage());
                     }
-		    echo date("d-M").":Delete deck";
+                    echo date("d-M") . ":Delete deck";
                     $run = 'delete';
                     break;
             }
@@ -43,12 +48,13 @@ foreach ($json as $action => $contents) {
                 break;
             }
         } else {
+            echo "ERREURS:\n";
             $error = [];
             if (strtolower(date('l')) != $value['jour'])
-                $error[] = 'jour';
+                $error[] = 'jour ' . strtolower(date('l')) . '!=' . $value['jour'];
             if (intval(date('H')) < intval($value['heure']))
-                $error[] = 'heure';
-            echo "temps pas bon pour $titre (" . implode(', ', $error) . ")\n";
+                $error[] = 'heure ' . intval(date('H')) . '<' . intval($value['heure']);
+            echo "temps pas bon pour $titre (" . implode(',', $error) . ")\n";
         }
     }
 }
