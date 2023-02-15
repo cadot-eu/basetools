@@ -15,7 +15,7 @@ foreach ($json as $action => $contents) {
                     if (isset($value['position']) && $value['position'] == 'top')
                         $value['ordre'] = -1;
                     try {
-                        exec('/home/debian/docker/applications/create_card.sh' . ' "' . $titre . '" "' . $value['description'] . '" ' . $value['col'] . ' ' . $value['ordre']);
+                        exec('/home/debian/docker/applications/deck/create_card.sh' . ' "' . $titre . '" "' . $value['description'] . '" ' . $value['col'] . ' ' . $value['ordre']);
                     } catch (Exception $e) {
                         exit('Exception reçue : ' . $e->getMessage());
                     }
@@ -24,7 +24,7 @@ foreach ($json as $action => $contents) {
                     break;
                 case 'move':
                     try {
-                        exec('/home/debian/docker/applications/move_card.sh' . ' "' . $titre . '" ' . $value['colstart'] . ' ' . $value['colend']);
+                        exec('/home/debian/docker/applications/deck/move_card.sh' . ' "' . $titre . '" ' . $value['colstart'] . ' ' . $value['colend']);
                     } catch (Exception $e) {
                         exit('Exception reçue : ' . $e->getMessage());
                     }
@@ -33,7 +33,7 @@ foreach ($json as $action => $contents) {
                     break;
                 case 'delete':
                     try {
-                        exec('/home/debian/docker/applications/delete_card.sh' . ' "' . $titre . '" ' . $value['col']);
+                        exec('/home/debian/docker/applications/deck/delete_card.sh' . ' "' . $titre . '" ' . $value['col']);
                     } catch (Exception $e) {
                         exit('Exception reçue : ' . $e->getMessage());
                     }
