@@ -1,8 +1,10 @@
 <?php
 require_once '../vendor/autoload.php';
+require_once 'getstacks.php';
 //on ouvre le fichier json
 $json = json_decode(file_get_contents('../deck.json'), true);
-$question = ['titre' => '', 'col' => "113,129,105,119,125", 'jour' => "monday,thursday", 'heure' => 9];
+
+$question = ['titre' => '', 'col' => $cols, 'jour' => "monday,thursday", 'heure' => 9];
 foreach ($question as $q => $def) {
     $reponse = readline("$q ($def)" . ': ');
     $rep[$q] = $reponse == '' ? $def : $reponse;
