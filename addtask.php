@@ -30,6 +30,7 @@ class Play extends Command
                 $reponse = $helper->ask($input, $output, $question);
             } else
                 $reponse = readline("$q ($def)" . ': ');
+            dd($reponse);
             $rep[$q] = $reponse == '' ? $def : $reponse;
         }
         $titre = $rep['titre'];
