@@ -50,9 +50,9 @@ class Task extends Command
         }
 
 
-        echo json_encode($this->json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        //file_put_contents('../deck.json', json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-
+        //echo json_encode($this->json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        file_put_contents('../deck.json', json_encode($this->json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+	echo file_get_contents('../deck.json');
         return Command::SUCCESS;
     }
     private function poserQuestion($questions)
