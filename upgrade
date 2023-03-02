@@ -8,6 +8,7 @@ gitSubmodulesOnMain
 gitSubmodulesUpdate
 git submodule update --init --recursive
 nom=${PWD##*/}
+sudo rm var/cache/* -R
 docker exec -it ${nom} composer install
 docker exec -it ${nom} yarn install
 docker exec -it ${nom} bin/console d:s:u --force
