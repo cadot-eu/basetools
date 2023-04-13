@@ -50,5 +50,7 @@ foreach (array_diff(scandir('/app/src/Entity'), array('..', '.', 'ResetPasswordR
                     }
                 }
               }');
+        $cmd = "vendor/bin/phpcbf /app/src/Repository/" . ucfirst($entity) . 'Repository.php';
+        shell_exec($cmd);
     }
 }
