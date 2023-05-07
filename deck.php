@@ -3,6 +3,7 @@ require_once '../vendor/autoload.php';
 //on ouvre le fichier json
 $json = json_decode(file_get_contents('../deck.json'), true);
 //boucle sur les actions
+if(is_array($json))
 foreach ($json as $action => $contents) {
     foreach ($contents as $titre => $value) {
         $run = '';
