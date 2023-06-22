@@ -21,7 +21,7 @@ class Task extends Command
     private $json;
     private $jour = ['complete' => "monday,thursday"];
     private $heure = ['complete' => "9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 1, 2, 3, 4, 5, 6, 7, 8"];
-    private $position = ['complete' => 'bottom', 'top'];
+    private $position = ['complete' => 'bottom,top'];
     private $col;
 
     protected function execute(InputInterface $input, OutputInterface $output): int
